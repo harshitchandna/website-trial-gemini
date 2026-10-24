@@ -1,0 +1,22 @@
+{
+  "name": "harshit-chandna-avant-garde-portfolio",
+  "version": "1.0.0",
+  "description": "Avant-Garde Creative Technologist & Systems Designer Portfolio — WebGL GLSL Shaders, 3D Kinetic Typography, Force-Directed Node Graph & Procedural Web Audio Synth",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "serve": "node server.js"
+  },
+  "keywords": [
+    "portfolio",
+    "design-engineering",
+    "webgl",
+    "glsl-shaders",
+    "kinetic-typography",
+    "interactive-design",
+    "systems-over-screens"
+  ],
+  "author": "Harshit Chandna",
+  "license": "MIT"
+}

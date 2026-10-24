@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HARSHIT CHANDNA — Design Engineer &amp; Systems Architect // Systems Over Screens</title>
+  <meta name="description" content="Avant-garde interactive portfolio of Harshit Chandna — Multidisciplinary Design Engineer, UX/UI Systems Architect, and Creative Technologist." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Syne:wght@700;800&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Real-Time WebGL GLSL Shader Canvas -->
+  <canvas id="shader-canvas" aria-hidden="true"></canvas>
+  <!-- High-Velocity Comet Trail & Particle Burst Canvas -->
+  <canvas id="trail-canvas" aria-hidden="true"></canvas>
+  <!-- Architectural Blueprint Grid Overlay -->
+  <div class="architectural-grid-overlay" aria-hidden="true"></div>
+
+  <!-- Custom Spring-Physics Magnetic Cursor -->
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true">
+    <span class="cursor-label" id="cursor-label">EXPLORE</span>
+  </div>
+
+  <!-- Cinematic Preloader with Harshit's Custom HC Monogram -->
+  <div id="preloader" role="status" aria-label="Loading portfolio">
+    <div class="preloader-top">
+      <span>HARSHIT CHANDNA // ARCHIVE 2026.4</span>
+      <span id="preloader-status">COMPILING GLSL FRAGMENT PIPELINE...</span>
+    </div>
+    <div class="preloader-center">
+      <svg class="hc-monogram-loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 707.4 601.15" aria-label="HC Monogram">
+        <polygon points="274.8 294.18 274.6 294.18 102.6 294.18 102.6 203.88 0 203.88 0 397.18 102.6 397.18 102.6 306.88 275.5 306.88 274.8 294.18"/>
+        <path d="M707.4,599.78v-22.4s-419.2,70.2-419.2-276.5S707.4,24.38,707.4,24.38V2.18c-420.2-31.1-439.6,281.2-441.6,298v.4h-.1l.7,12.7C271.1,373.08,311,621.78,707.4,599.78Z"/>
+      </svg>
+      <div class="preloader-progress-track">
+        <div class="preloader-progress-bar" id="preloader-bar"></div>
+      </div>
+      <div class="preloader-counter" id="preloader-counter">000%</div>
+    </div>
+    <div class="preloader-bottom">
+      <span>DELHI TECHNOLOGICAL UNIVERSITY // DESIGN ENGINEERING</span>
+      <span>SYSTEMS OVER SCREENS</span>
+    </div>
+  </div>
+
+  <!-- Top Architectural HUD Header -->
+  <header class="hud-header" data-bp="HUD::NAV_HEADER [fixed 100vw]">
+    <a href="#top" class="brand-cluster" data-magnetic data-cursor="HOME">
+      <svg class="brand-monogram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 707.4 601.15" aria-hidden="true">
+        <polygon points="274.8 294.18 274.6 294.18 102.6 294.18 102.6 203.88 0 203.88 0 397.18 102.6 397.18 102.6 306.88 275.5 306.88 274.8 294.18"/>
+        <path d="M707.4,599.78v-22.4s-419.2,70.2-419.2-276.5S707.4,24.38,707.4,24.38V2.18c-420.2-31.1-439.6,281.2-441.6,298v.4h-.1l.7,12.7C271.1,373.08,311,621.78,707.4,599.78Z"/>
+      </svg>
+      <div class="brand-meta">
+        <span class="brand-name">Harshit Chandna</span>
+        <span class="brand-role">SYS.ARCHITECT // DESIGN ENGINEER</span>
+      </div>
+    </a>
+
+    <nav class="hud-nav" aria-label="Primary Navigation">
+      <a href="#work" class="hud-nav-link active" data-magnetic data-cursor="ARCHIVE">01 // Work</a>
+      <a href="#systems" class="hud-nav-link" data-magnetic data-cursor="NODE GRAPH">02 // Systems</a>
+      <a href="#lab" class="hud-nav-link" data-magnetic data-cursor="SONIC LAB">03 // Lab</a>
+      <a href="#chronology" class="hud-nav-link" data-magnetic data-cursor="TIMELINE">04 // Trajectory</a>
+      <a href="#contact" class="hud-nav-link" data-magnetic data-cursor="TRANSMIT">05 // Contact</a>
+    </nav>
+
+    <div class="hud-actions">
+      <button type="button" class="hud-btn" id="btn-blueprint" data-magnetic data-cursor="X-RAY [X]" title="Toggle Architectural Blueprint Mode (Key: X)">
+        <span>[X] Blueprint</span>
+      </button>
+      <button type="button" class="hud-btn" id="btn-audio" data-magnetic data-cursor="SYNTH AUDIO" title="Toggle Generative Web Audio Synth (Key: M)">
+        <span class="audio-eq" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </span>
+        <span id="audio-label">SYNTH: OFF</span>
+      </button>
+      <button type="button" class="hud-btn" id="btn-cmd" data-magnetic data-cursor="CMD+K" title="Open Command Palette (Ctrl+K)">
+        <span>⌘K</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Floating Bottom WebGL Shader Switcher Dock -->
+  <aside class="shader-dock" aria-label="WebGL Shader Realm Controls" data-bp="WEBGL::SHADER_DOCK">
+    <span class="dock-label">GLSL Engine</span>
+    <button type="button" class="shader-pill active" data-shader-mode="0" data-magnetic data-cursor="SHADER 01">01 // Plasma</button>
+    <button type="button" class="shader-pill" data-shader-mode="1" data-magnetic data-cursor="SHADER 02">02 // Event Horizon</button>
+    <button type="button" class="shader-pill" data-shader-mode="2" data-magnetic data-cursor="SHADER 03">03 // LiDAR Topo</button>
+    <button type="button" class="shader-pill" data-shader-mode="3" data-magnetic data-cursor="SHADER 04">04 // Ferrofluid</button>
+  </aside>
+
+  <main id="top">
+    <!-- ====================================================================
+         HERO SECTION — 3D KINETIC TYPOGRAPHY & SHOCKWAVE STAGE
+         ==================================================================== -->
+    <section class="section-shell hero-section" id="hero-stage" data-bp="SECTION::HERO_3D_KINETIC">
+      <div class="hero-telemetry-bar">
+        <div class="status-badge">
+          <span class="status-pulse"></span>
+          <span>AVAILABLE FOR SELECT DESIGN ENGINEERING &amp; PRODUCT LEADERSHIP // 2026</span>
+        </div>
+        <div class="telemetry-readout">
+          <span>FPS: <strong id="hud-fps">60</strong></span>
+          <span>VELOCITY: <strong id="hud-vel">0.00</strong> px/f</span>
+          <span>COORDS: <strong id="hud-coords">0.50, 0.50</strong></span>
+        </div>
+      </div>
+
+      <div class="hero-headline-stage" data-cursor="CLICK FOR SHOCKWAVE">
+        <span class="hero-eyebrow">HARSHIT CHANDNA // MULTIDISCIPLINARY DESIGNER &amp; CREATIVE TECHNOLOGIST</span>
+        <h1 class="kinetic-title" id="kinetic-hero-title">
+          <span class="kinetic-line">
+            <span class="kinetic-word" data-kinetic-word>SYSTEMS</span>
+            <span class="editorial-serif">over</span>
+          </span>
+          <span class="kinetic-line">
+            <span class="kinetic-word" data-kinetic-word>SCREENS</span>
+            <span class="editorial-serif">&amp;</span>
+            <span class="kinetic-word" data-kinetic-word>MOTION</span>
+          </span>
+        </h1>
+      </div>
+
+      <div class="hero-subgrid">
+        <p class="hero-manifesto">
+          Architecting <strong>autonomous design systems</strong>, <strong>spatial interfaces</strong>, and
+          <strong>visceral WebGL experiences</strong> where mathematical precision meets human emotion.
+          From enterprise-scale unified UX architecture at <strong>Sprinklr</strong> to kinetic brand worlds and
+          thesis research at <strong>DTU</strong>—every pixel operates as a living node in a larger system.
+        </p>
+        <div class="hero-cta-cluster">
+          <a href="#work" class="btn-primary" data-magnetic data-cursor="ENTER ARCHIVE">
+            <span>Explore Selected Works</span>
+            <span>↘</span>
+          </a>
+          <button type="button" class="btn-secondary" id="btn-hero-shockwave" data-magnetic data-cursor="PULSE WAVE">
+            <span>Trigger Shader Shockwave</span>
+            <span>✦</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VELOCITY-REACTIVE INFINITE KINETIC MARQUEE
+         ==================================================================== -->
+    <div class="velocity-marquee-wrap" aria-hidden="true">
+      <div class="velocity-marquee-track" id="marquee-track">
+        <span class="marquee-item">SYSTEMS OVER SCREENS <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">ENTERPRISE DESIGN ARCHITECTURE <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">REAL-TIME GLSL SHADERS <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">SPATIAL INTERACTION DESIGN <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">KINETIC TYPOGRAPHY <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">GENERATIVE BRAND IDENTITIES <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">SYSTEMS OVER SCREENS <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">ENTERPRISE DESIGN ARCHITECTURE <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">REAL-TIME GLSL SHADERS <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">SPATIAL INTERACTION DESIGN <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">KINETIC TYPOGRAPHY <span class="marquee-star">✦</span></span>
+        <span class="marquee-item">GENERATIVE BRAND IDENTITIES <span class="marquee-star">✦</span></span>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         01 // SELECTED WORKS — 3D TILT CARDS WITH LIVE GENERATIVE CANVASES
+         ==================================================================== -->
+    <section class="section-shell" id="work" data-bp="SECTION::SELECTED_WORKS [6_CASES]">
+      <div class="section-header">
+        <div>
+          <span class="section-index">01 // CURATED MONOGRAPHS (2023 — 2026)</span>
+          <h2 class="section-title">Selected Works &amp; <span class="editorial-serif">Architectures</span></h2>
+        </div>
+        <div class="filter-bar" role="tablist" aria-label="Filter projects by discipline">
+          <button type="button" class="filter-chip active" data-filter="all" data-magnetic data-cursor="ALL">All (06)</button>
+          <button type="button" class="filter-chip" data-filter="systems" data-magnetic data-cursor="FILTER">Design Systems</button>
+          <button type="button" class="filter-chip" data-filter="spatial" data-magnetic data-cursor="FILTER">Spatial &amp; WebGL</button>
+          <button type="button" class="filter-chip" data-filter="brand" data-magnetic data-cursor="FILTER">Brand Identity</button>
+        </div>
+      </div>
+
+      <div class="projects-grid" id="projects-grid">
+        <!-- Project 01 -->
+        <article class="project-card span-7" data-category="systems" data-project-id="0" data-bp="CARD::CASE_01 [SYSTEMS_OVER_SCREENS]" data-cursor="INSPECT CASE">
+          <div class="card-glare"></div>
+          <div class="project-visual-stage">
+            <div class="project-top-badges">
+              <span class="project-num">CASE // 01</span>
+              <span class="project-year">2025 — 2026</span>
+            </div>
+            <canvas class="project-canvas" data-art-type="token-lattice"></canvas>
+          </div>
+          <div class="project-body">
+            <span class="project-category">DESIGN SYSTEMS ARCHITECTURE // DTU THESIS</span>
+            <h3 class="project-title">Systems Over Screens — Autonomous Multi-Brand Token Compiler</h3>
+            <p class="project-summary">
+              Replaced static screen-by-screen handoffs with a relational graph of semantic tokens, WCAG-aware contrast solvers, and live motion curves across 140+ component primitives.
+            </p>
+            <div class="project-footer">
+              <div class="project-tags">
+                <span class="project-tag">Design Tokens</span>
+                <span class="project-tag">Graph Theory</span>
+                <span class="project-tag">AST Compiler</span>
+              </div>
+              <button type="button" class="project-inspect-btn">Inspect Architecture ↗</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 02 -->
+        <article class="project-card span-5" data-category="systems" data-project-id="1" data-bp="CARD::CASE_02 [SPRINKLR_UNIFIED_UX]" data-cursor="INSPECT CASE">
+          <div class="card-glare"></div>
+          <div class="project-visual-stage">
+            <div class="project-top-badges">
+              <span class="project-num">CASE // 02</span>
+              <span class="project-year">2025</span>
+            </div>
+            <canvas class="project-canvas" data-art-type="neural-telemetry"></canvas>
+          </div>
+          <div class="project-body">
+            <span class="project-category">ENTERPRISE UX RESEARCH &amp; AI WORKFLOWS</span>
+            <h3 class="project-title">Sprinklr Unified CXM — AI Copilot &amp; Omnichannel Triage</h3>
+            <p class="project-summary">
+              Extensive UX/UI system research and high-velocity command workflows reducing enterprise agent cognitive load by 41% across real-time crisis dashboards.
+            </p>
+            <div class="project-footer">
+              <div class="project-tags">
+                <span class="project-tag">Enterprise UX</span>
+                <span class="project-tag">AI Workflows</span>
+                <span class="project-tag">Information Density</span>
+              </div>
+              <button type="button" class="project-inspect-btn">Inspect Architecture ↗</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 03 -->
+        <article class="project-card span-5" data-category="brand" data-project-id="2" data-bp="CARD::CASE_03 [TEAM_INFRARED]" data-cursor="INSPECT CASE">
+          <div class="card-glare"></div>
+          <div class="project-visual-stage">
+            <div class="project-top-badges">
+              <span class="project-num">CASE // 03</span>
+              <span class="project-year">2024 — 2025</span>
+            </div>
+            <canvas class="project-canvas" data-art-type="infrared-spectrum"></canvas>
+          </div>
+          <div class="project-body">
+            <span class="project-category">KINETIC BRAND IDENTITY &amp; GENERATIVE SYSTEM</span>
+            <h3 class="project-title">Team InfraRed — Thermal Telemetry &amp; Motorsport Identity</h3>
+            <p class="project-summary">
+              A procedural brand identity inspired by FLIR thermal imaging, aerodynamic vector fields, and custom variable display typography that reacts to telemetry speed.
+            </p>
+            <div class="project-footer">
+              <div class="project-tags">
+                <span class="project-tag">Brand System</span>
+                <span class="project-tag">Motion Identity</span>
+                <span class="project-tag">Variable Type</span>
+              </div>
+              <button type="button" class="project-inspect-btn">Inspect Architecture ↗</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 04 -->
+        <article class="project-card span-7" data-category="spatial" data-project-id="3" data-bp="CARD::CASE_04 [AETHER_SPATIAL_OS]" data-cursor="INSPECT CASE">
+          <div class="card-glare"></div>
+          <div class="project-visual-stage">
+            <div class="project-top-badges">
+              <span class="project-num">CASE // 04</span>
+              <span class="project-year">2026</span>
+            </div>
+            <canvas class="project-canvas" data-art-type="spatial-rings"></canvas>
+          </div>
+          <div class="project-body">
+            <span class="project-category">SPATIAL COMPUTING &amp; GAZE-PINCH CHOREOGRAPHY</span>
+            <h3 class="project-title">Aether OS — Zero-Gravity Spatial Workspace &amp; Depth UI</h3>
+            <p class="project-summary">
+              Gaze-predicted glassmorphic windows with dynamic Z-depth occlusion, refractive rim lighting, and physics-driven micro-momentum for mixed-reality workstations.
+            </p>
+            <div class="project-footer">
+              <div class="project-tags">
+                <span class="project-tag">Spatial UI</span>
+                <span class="project-tag">3D Optics</span>
+                <span class="project-tag">Micro-Physics</span>
+              </div>
+              <button type="button" class="project-inspect-btn">Inspect Architecture ↗</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 05 -->
+        <article class="project-card span-6" data-category="spatial" data-project-id="4" data-bp="CARD::CASE_05 [CHRONOSYNTH]" data-cursor="INSPECT CASE">
+          <div class="card-glare"></div>
+          <div class="project-visual-stage">
+            <div class="project-top-badges">
+              <span class="project-num">CASE // 05</span>
+              <span class="project-year">2025</span>
+            </div>
+            <canvas class="project-canvas" data-art-type="lissajous-synth"></canvas>
+          </div>
+          <div class="project-body">
+            <span class="project-category">CREATIVE TECHNOLOGY &amp; AUDIO-VISUAL INSTRUMENT</span>
+            <h3 class="project-title">ChronoSynth — Oscilloscope Lissajous Modular Interface</h3>
+            <p class="project-summary">
+              Browser-native polyphonic FM synthesizer paired with a 60fps vector oscilloscope where every rotary encoder and patch cable deforms real-time harmonic geometry.
+            </p>
+            <div class="project-footer">
+              <div class="project-tags">
+                <span class="project-tag">Web Audio DSP</span>
+                <span class="project-tag">Lissajous Math</span>
+                <span class="project-tag">Tactile UI</span>
+              </div>
+              <button type="button" class="project-inspect-btn">Inspect Architecture ↗</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 06 -->
+        <article class="project-card span-6" data-category="brand" data-project-id="5" data-bp="CARD::CASE_06 [SOLA_OPTICS]" data-cursor="INSPECT CASE">
+          <div class="card-glare"></div>
+          <div class="project-visual-stage">
+            <div class="project-top-badges">
+              <span class="project-num">CASE // 06</span>
+              <span class="project-year">2024</span>
+            </div>
+            <canvas class="project-canvas" data-art-type="caustic-prism"></canvas>
+          </div>
+          <div class="project-body">
+            <span class="project-category">LUXURY EDITORIAL &amp; 3D PRODUCT DIRECTION</span>
+            <h3 class="project-title">Sola Frames &amp; Noir Essence — Refractive Editorial Flagship</h3>
+            <p class="project-summary">
+              High-fashion optical &amp; fragrance digital flagship combining custom WebGL glass dispersion shaders with tactile scroll-scrubbed editorial storytelling.
+            </p>
+            <div class="project-footer">
+              <div class="project-tags">
+                <span class="project-tag">Art Direction</span>
+                <span class="project-tag">WebGL Caustics</span>
+                <span class="project-tag">Editorial UX</span>
+              </div>
+              <button type="button" class="project-inspect-btn">Inspect Architecture ↗</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         02 // INTERACTIVE "SYSTEMS OVER SCREENS" NODE-GRAPH PLAYGROUND
+         ==================================================================== -->
+    <section class="section-shell" id="systems" data-bp="SECTION::FORCE_DIRECTED_GRAPH">
+      <div class="section-header">
+        <div>
+          <span class="section-index">02 // INTERACTIVE ARCHITECTURE GRAPH</span>
+          <h2 class="section-title">Systems Over Screens <span class="editorial-serif">Topology</span></h2>
+        </div>
+        <p style="max-width: 44ch; color: var(--text-secondary); font-size: 0.92rem;">
+          Drag, slingshot, and inspect live nodes below. My design process treats interfaces not as isolated static artboards, but as interconnected force-directed ecosystems.
+        </p>
+      </div>
+
+      <div class="systems-playground-grid">
+        <div class="node-graph-stage" data-cursor="DRAG NODES">
+          <canvas id="node-graph-canvas"></canvas>
+          <div class="stage-hud-overlay">
+            <span class="stage-badge">LIVE VERLET SPRING PHYSICS // CLICK OR DRAG ANY NODE</span>
+            <div class="stage-controls">
+              <button type="button" class="mini-btn" id="btn-graph-pulse" data-magnetic>Inject Signal Pulse</button>
+              <button type="button" class="mini-btn" id="btn-graph-scramble" data-magnetic>Perturb Topology</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="node-inspector-panel" aria-live="polite" data-bp="PANEL::NODE_TELEMETRY">
+          <div>
+            <div class="inspector-header">
+              <span class="inspector-id" id="node-inspect-id">NODE // 01 [SELECTED]</span>
+              <h3 class="inspector-title" id="node-inspect-title">Semantic Token Graph</h3>
+            </div>
+            <p class="inspector-desc" id="node-inspect-desc" style="margin-top: 1rem;">
+              Primitive values (Oklch color spaces, fluid typographic scales, and spring physics constants) cascade automatically into context-aware surface, elevation, and accessibility tokens.
+            </p>
+          </div>
+
+          <div class="inspector-metrics">
+            <div class="metric-box">
+              <span class="metric-label">Connected Edges</span>
+              <span class="metric-val" id="node-inspect-edges">5 Links</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-label">Propagation Latency</span>
+              <span class="metric-val" id="node-inspect-latency">0.4 ms</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-label">System Coverage</span>
+              <span class="metric-val" id="node-inspect-coverage">99.4%</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-label">Kinetic Tension</span>
+              <span class="metric-val" id="node-inspect-tension">0.82 N</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         03 // CREATIVE TECH & SONIC SYNTH LAB (BENTO GRID)
+         ==================================================================== -->
+    <section class="section-shell" id="lab" data-bp="SECTION::SENSORY_BENTO_LAB">
+      <div class="section-header">
+        <div>
+          <span class="section-index">03 // REAL-TIME SENSORY EXPERIMENTS</span>
+          <h2 class="section-title">Sonic &amp; Shader <span class="editorial-serif">Laboratory</span></h2>
+        </div>
+        <p style="max-width: 44ch; color: var(--text-secondary); font-size: 0.92rem;">
+          Play the browser-native polyphonic Web Audio harmonic matrix, mutate the global GLSL color uniforms, or modulate shader turbulence in real time.
+        </p>
+      </div>
+
+      <div class="bento-lab-grid">
+        <!-- Bento 1: Polyphonic Web Audio Pentatonic Synth Matrix -->
+        <div class="bento-card bento-span-7" data-bp="BENTO::WEB_AUDIO_SYNTH">
+          <div>
+            <span class="bento-label">EXPERIMENT 01 // WEB AUDIO API DSP SYNTHESIZER</span>
+            <h3 class="bento-title">Harmonic UI Micro-Synth Matrix (Click or Hover Pads)</h3>
+          </div>
+          <div class="synth-pad-grid" id="synth-pad-grid">
+            <button type="button" class="synth-pad" data-freq="261.63" data-note="C4" data-cursor="PLAY C4">
+              <span class="synth-note">C4</span><span class="synth-freq">261.6 Hz</span>
+            </button>
+            <button type="button" class="synth-pad" data-freq="293.66" data-note="D4" data-cursor="PLAY D4">
+              <span class="synth-note">D4</span><span class="synth-freq">293.7 Hz</span>
+            </button>
+            <button type="button" class="synth-pad" data-freq="349.23" data-note="F4" data-cursor="PLAY F4">
+              <span class="synth-note">F4</span><span class="synth-freq">349.2 Hz</span>
+            </button>
+            <button type="button" class="synth-pad" data-freq="392.00" data-note="G4" data-cursor="PLAY G4">
+              <span class="synth-note">G4</span><span class="synth-freq">392.0 Hz</span>
+            </button>
+            <button type="button" class="synth-pad" data-freq="440.00" data-note="A4" data-cursor="PLAY A4">
+              <span class="synth-note">A4</span><span class="synth-freq">440.0 Hz</span>
+            </button>
+            <button type="button" class="synth-pad" data-freq="523.25" data-note="C5" data-cursor="PLAY C5">
+              <span class="synth-note">C5</span><span class="synth-freq">523.3 Hz</span>
+            </button>
+            <button type="button" class="synth-pad" data-freq="587.33" data-note="D5" data-cursor="PLAY D5">
+              <span class="synth-note">D5</span><span class="synth-freq">587.3 Hz</span>
+            </button>
+            <button type="button" class="synth-pad" data-freq="659.25" data-note="E5" data-cursor="PLAY E5">
+              <span class="synth-note">E5</span><span class="synth-freq">659.3 Hz</span>
+            </button>
+          </div>
+          <p style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary);">
+            Each pad synthesizes a dual-oscillator triangle/sine voice with exponential ADSR envelope and triggers a synchronized ripple on the background GLSL canvas.
+          </p>
+        </div>
+
+        <!-- Bento 2: Real-Time Chromatic Theme Matrix -->
+        <div class="bento-card bento-span-5" data-bp="BENTO::PALETTE_UNIFORMS">
+          <div>
+            <span class="bento-label">EXPERIMENT 02 // CHROMATIC UNIFORM INJECTION</span>
+            <h3 class="bento-title">Live Shader &amp; Token Atmosphere</h3>
+          </div>
+          <div class="palette-grid" id="palette-grid">
+            <button type="button" class="palette-btn active" data-theme="acid" data-cursor="APPLY THEME">
+              <span class="swatch-pair">
+                <span class="swatch-dot" style="background:#d4ff00"></span>
+                <span class="swatch-dot" style="background:#00f0ff"></span>
+              </span>
+              <span>Acid Obsidian</span>
+            </button>
+            <button type="button" class="palette-btn" data-theme="infrared" data-cursor="APPLY THEME">
+              <span class="swatch-pair">
+                <span class="swatch-dot" style="background:#ff3b6b"></span>
+                <span class="swatch-dot" style="background:#ff9e00"></span>
+              </span>
+              <span>Thermal InfraRed</span>
+            </button>
+            <button type="button" class="palette-btn" data-theme="cyber" data-cursor="APPLY THEME">
+              <span class="swatch-pair">
+                <span class="swatch-dot" style="background:#00f5d4"></span>
+                <span class="swatch-dot" style="background:#7b2cbf"></span>
+              </span>
+              <span>Bioluminescent</span>
+            </button>
+            <button type="button" class="palette-btn" data-theme="monochrome" data-cursor="APPLY THEME">
+              <span class="swatch-pair">
+                <span class="swatch-dot" style="background:#ffffff"></span>
+                <span class="swatch-dot" style="background:#8a94a6"></span>
+              </span>
+              <span>Stark Titanium</span>
+            </button>
+          </div>
+
+          <div class="uniform-controls">
+            <div class="slider-row">
+              <div class="slider-header">
+                <span>GLSL Specular Dispersion (`u_intensity`)</span>
+                <strong id="intensity-val">1.00</strong>
+              </div>
+              <input type="range" id="slider-intensity" min="0.2" max="2.2" step="0.05" value="1.0" aria-label="Shader specular dispersion intensity" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         04 // TRAJECTORY, RESEARCH & HONORS
+         ==================================================================== -->
+    <section class="section-shell" id="chronology" data-bp="SECTION::CHRONOLOGY">
+      <div class="section-header">
+        <div>
+          <span class="section-index">04 // ACADEMIC &amp; INDUSTRY TRAJECTORY</span>
+          <h2 class="section-title">Experience &amp; <span class="editorial-serif">Research</span></h2>
+        </div>
+      </div>
+
+      <div class="timeline-list">
+        <div class="timeline-row" data-cursor="TRAJECTORY">
+          <span class="timeline-period">2025 — 2026</span>
+          <span class="timeline-role">Systems Over Screens — Design Thesis</span>
+          <span class="timeline-org">Delhi Technological University (DTU) // Department of Design</span>
+          <span class="timeline-badge">Design Systems &amp; Architecture</span>
+        </div>
+        <div class="timeline-row" data-cursor="TRAJECTORY">
+          <span class="timeline-period">2025</span>
+          <span class="timeline-role">UX/UI Systems &amp; Product Research</span>
+          <span class="timeline-org">Sprinklr — Unified CXM Enterprise Experience</span>
+          <span class="timeline-badge">Enterprise AI UX</span>
+        </div>
+        <div class="timeline-row" data-cursor="TRAJECTORY">
+          <span class="timeline-period">2024 — 2025</span>
+          <span class="timeline-role">Brand Identity &amp; Visual Systems Lead</span>
+          <span class="timeline-org">Team InfraRed // Motorsport &amp; Engineering Collective</span>
+          <span class="timeline-badge">Kinetic Identity</span>
+        </div>
+        <div class="timeline-row" data-cursor="TRAJECTORY">
+          <span class="timeline-period">2022 — 2026</span>
+          <span class="timeline-role">B.Des — Interaction, Product &amp; Visual Communication</span>
+          <span class="timeline-org">Delhi Technological University (DTU), New Delhi</span>
+          <span class="timeline-badge">Honors &amp; Creative Tech</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         05 // MAGNETIC CONTACT PORTAL
+         ==================================================================== -->
+    <section class="section-shell" id="contact" data-bp="SECTION::CONTACT_PORTAL">
+      <div class="contact-portal">
+        <span class="section-index">05 // INITIATE TRANSMISSION</span>
+        <h2 class="contact-portal-title">
+          Let’s Architect the <span class="editorial-serif">Unimaginable</span>
+        </h2>
+        <p style="max-width: 54ch; margin: 0 auto; color: var(--text-secondary); font-size: 1.05rem;">
+          Currently open to Design Engineering, Product Design, and Creative Technologist roles, as well as ambitious commissioned digital flagships.
+        </p>
+        <div class="contact-actions">
+          <button type="button" class="btn-primary" id="btn-copy-email" data-email="harshitchandna@dtu.ac.in" data-magnetic data-cursor="COPY EMAIL">
+            <span id="copy-email-text">harshitchandna@dtu.ac.in</span>
+            <span>⧉</span>
+          </button>
+          <a href="https://github.com/harshitchandna/website-trial-gemini" target="_blank" rel="noopener noreferrer" class="btn-secondary" data-magnetic data-cursor="GITHUB">
+            <span>GitHub Repository</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 HARSHIT CHANDNA // BUILT WITH CUSTOM GLSL SHADERS, SPRING PHYSICS &amp; WEB AUDIO DSP</span>
+    <span>PRESS [1–4] SHADERS · [X] BLUEPRINT · [⌘K] COMMAND PALETTE</span>
+  </footer>
+
+  <!-- ====================================================================
+       INTERACTIVE CASE STUDY DEEP-DIVE MODAL
+       ==================================================================== -->
+  <div class="modal-backdrop" id="case-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="case-modal-card">
+      <div class="modal-top">
+        <div>
+          <span class="section-index" id="modal-category">DESIGN SYSTEMS ARCHITECTURE</span>
+          <h2 class="section-title" id="modal-title" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">Case Study Title</h2>
+        </div>
+        <button type="button" class="modal-close-btn" id="modal-close" data-cursor="CLOSE [ESC]">ESC ✕</button>
+      </div>
+      <p id="modal-overview" style="color: var(--text-secondary); font-size: 1.02rem; line-height: 1.65;"></p>
+      <div class="modal-metrics-row" id="modal-metrics"></div>
+      <div style="border-top: 1px solid var(--border-hairline); padding-top: 1.25rem; margin-top: 1rem;">
+        <span class="bento-label">ARCHITECTURAL BREAKDOWN &amp; DELIVERABLES</span>
+        <p id="modal-architecture" style="color: var(--text-primary); margin-top: 0.5rem; line-height: 1.65;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       COMMAND PALETTE (CTRL+K / CMD+K)
+       ==================================================================== -->
+  <div class="modal-backdrop" id="cmd-modal" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="cmd-palette-card">
+      <input type="text" class="cmd-input" id="cmd-input" placeholder="Type a command or jump to section... (ESC to close)" autocomplete="off" />
+      <div class="cmd-list" id="cmd-list">
+        <button type="button" class="cmd-item" data-cmd="shader-0">
+          <span>Switch GLSL Shader → 01 // Iridescent Plasma</span>
+          <span class="cmd-shortcut">Key 1</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="shader-1">
+          <span>Switch GLSL Shader → 02 // Gravitational Event Horizon</span>
+          <span class="cmd-shortcut">Key 2</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="shader-2">
+          <span>Switch GLSL Shader → 03 // Cybernetic LiDAR Topography</span>
+          <span class="cmd-shortcut">Key 3</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="shader-3">
+          <span>Switch GLSL Shader → 04 // Ferrofluid Magnetics</span>
+          <span class="cmd-shortcut">Key 4</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="toggle-blueprint">
+          <span>Toggle Architectural X-Ray Blueprint Mode</span>
+          <span class="cmd-shortcut">Key X</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="toggle-audio">
+          <span>Toggle Generative Web Audio Synthesizer</span>
+          <span class="cmd-shortcut">Key M</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="shockwave">
+          <span>Trigger Center Shader Shockwave Pulse</span>
+          <span class="cmd-shortcut">Space</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="goto-work">
+          <span>Jump to 01 // Selected Works Archive</span>
+          <span class="cmd-shortcut">#work</span>
+        </button>
+        <button type="button" class="cmd-item" data-cmd="goto-systems">
+          <span>Jump to 02 // Systems Over Screens Node Graph</span>
+          <span class="cmd-shortcut">#systems</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="shaders.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
